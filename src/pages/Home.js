@@ -309,7 +309,7 @@ const Home = () => {
   };
   const connectMetamask = () => {
     const injectedConnector = new InjectedConnector({
-      supportedChainIds: [56],
+      supportedChainIds: [56, 97],
     });
     activate(injectedConnector);
   };
@@ -329,7 +329,7 @@ const Home = () => {
 
   const getNetworkMessage = () => {
     if (active) {
-      return "CONNECTED TO BSC MAINNET";
+      return "CONNECTED TO BSC " + (chainId == "56" ? "MAINNET" : "TESTNET");
     }
     if (error instanceof UnsupportedChainIdError) {
       return "CONNECTED WRONG NETWORK";
@@ -357,7 +357,7 @@ const Home = () => {
     }
   }, [active, chainId, error, library, account]);
   useEffect(() => {
-    const fetchTokenInfo = () => {
+    const fetchTokenInfoMainnet = () => {
       setLoadingMessage("Loading Token Info ...");
       fetch(coingeckoApiLink)
         .then((response) => response.json())
@@ -385,7 +385,25 @@ const Home = () => {
 
       setLoadingMessage("");
     };
-    fetchTokenInfo();
+    if (chainId == "56") {
+      fetchTokenInfoMainnet();
+    } else {
+      const mockTokenInfo = [
+        {
+          id: "0Test1",
+          symbol: "0Test1",
+          name: "0Test1",
+          platforms: { "binance-smart-chain": "0x857e3CC38C83233E7A64A81bC8EbbbbfDef808e2" },
+        },
+        {
+          id: "1Test2",
+          symbol: "1Test2",
+          name: "1Test2",
+          platforms: { "binance-smart-chain": "0x3271B3a2C11CF2fbDCe05E5e6F18599779209369" },
+        },
+      ];
+      setTokenInfo(mockTokenInfo);
+    }
   }, []);
   return (
     <div>
