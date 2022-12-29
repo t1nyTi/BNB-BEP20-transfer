@@ -404,7 +404,7 @@ const Home = () => {
       ];
       setTokenInfo(mockTokenInfo);
     }
-  }, []);
+  }, [chainId]);
   return (
     <div>
       <Modal
