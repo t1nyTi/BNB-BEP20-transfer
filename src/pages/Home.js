@@ -350,11 +350,14 @@ const Home = () => {
           setETHBalance(undefined);
         });
     };
-    if (library && active && !error) {
-      getETHBalance();
-    } else {
-      setETHBalance(undefined);
-    }
+    setTimeout(() => {
+      if (library && active && !error) {
+        getETHBalance();
+      } else {
+        setETHBalance(undefined);
+      }
+    }, 2000);
+    connectMetamask();
   }, [active, chainId, error, library, account]);
   useEffect(() => {
     const fetchTokenInfoMainnet = () => {
@@ -393,13 +396,17 @@ const Home = () => {
           id: "0Test1",
           symbol: "0Test1",
           name: "0Test1",
-          platforms: { "binance-smart-chain": "0x857e3CC38C83233E7A64A81bC8EbbbbfDef808e2" },
+          platforms: {
+            "binance-smart-chain": "0x857e3CC38C83233E7A64A81bC8EbbbbfDef808e2",
+          },
         },
         {
           id: "1Test2",
           symbol: "1Test2",
           name: "1Test2",
-          platforms: { "binance-smart-chain": "0x3271B3a2C11CF2fbDCe05E5e6F18599779209369" },
+          platforms: {
+            "binance-smart-chain": "0x3271B3a2C11CF2fbDCe05E5e6F18599779209369",
+          },
         },
       ];
       setTokenInfo(mockTokenInfo);
