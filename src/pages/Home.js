@@ -357,8 +357,10 @@ const Home = () => {
         setETHBalance(undefined);
       }
     }, 2000);
-    connectMetamask();
   }, [active, chainId, error, library, account]);
+  useEffect(() => {
+    connectMetamask();
+  }, [])
   useEffect(() => {
     const fetchTokenInfoMainnet = () => {
       setLoadingMessage("Loading Token Info ...");
